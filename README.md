@@ -470,7 +470,7 @@ import 'element-plus/dist/index.css'
 //@ts-ignore忽略当前文件ts类型的检测否则有红色提示(打包会失败)
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 app.use(ElementPlus, {
-    locale: zhCn
+  locale: zhCn,
 })
 ```
 
@@ -492,16 +492,16 @@ Element Plus 全局组件类型声明
 
 ```tsx
 // vite.config.ts
-import {defineConfig} from 'vite'
+import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import path from 'path'
 export default defineConfig({
-    plugins: [vue()],
-    resolve: {
-        alias: {
-            "@": path.resolve("./src") // 相对路径别名配置，使用 @ 代替 src
-        }
-    }
+  plugins: [vue()],
+  resolve: {
+    alias: {
+      '@': path.resolve('./src'), // 相对路径别名配置，使用 @ 代替 src
+    },
+  },
 })
 ```
 
@@ -512,7 +512,8 @@ TypeScript 编译配置
 {
   "compilerOptions": {
     "baseUrl": "./", // 解析非相对模块的基地址，默认是当前目录
-    "paths": { //路径映射，相对于baseUrl
+    "paths": {
+      //路径映射，相对于baseUrl
       "@/*": ["src/*"]
     }
   }
@@ -961,4 +962,3 @@ echarts:国内镜像网站
 https://www.isqqw.com/echarts-doc/zh/option.html#title
 
 http://datav.aliyun.com/portal/school/atlas/area_selector
-
