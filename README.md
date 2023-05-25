@@ -430,13 +430,11 @@ pnpm commitlint
 
 ### 强制使用 pnpm 包管理器工具
 
-团队开发项目的时候，需要统一包管理器工具,因为不同包管理器工具下载同一个依赖,可能版本不一样,
-
-导致项目出现 bug 问题,因此包管理器工具需要统一管理！！！
+团队开发项目的时候，需要统一包管理器工具，因为不同包管理器工具下载同一个依赖，可能版本不一样，导致项目出现 bug 问题，因此包管理器工具需要统一管理！！！
 
 在根目录创建`scritps/preinstall.js`文件，添加下面的内容
 
-```
+```js
 if (!/pnpm/.test(process.env.npm_execpath || '')) {
   console.warn(
     `\u001b[33mThis repository must using pnpm as the package manager ` +
@@ -448,13 +446,13 @@ if (!/pnpm/.test(process.env.npm_execpath || '')) {
 
 配置命令
 
-```
+```json
 "scripts": {
 	"preinstall": "node ./scripts/preinstall.js"
 }
 ```
 
-**当我们使用 npm 或者 yarn 来安装包的时候，就会报错了。原理就是在 install 的时候会触发 preinstall（npm 提供的生命周期钩子）这个文件里面的代码。**
+当我们使用 npm 或者 yarn 来安装包的时候，就会报错了。原理就是在 install 的时候会触发 preinstall（npm 提供的生命周期钩子）这个文件里面的代码。
 
 ## 项目集成
 
