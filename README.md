@@ -342,9 +342,9 @@ pnpm run format
 
 当我们对代码进行 commit 操作的时候，就会执行命令，对代码进行格式化，然后再提交。
 
-#### 五、配置 commitlint
+### commitlint 配置
 
-对于我们的 commit 信息，也是有统一规范的，不能随便写,要让每个人都按照统一的标准来执行，我们可以利用**commitlint**来实现。
+对于我们的 commit 信息，也是有统一规范的，不能随便写，要让每个人都按照统一的标准来执行，我们可以利用**commitlint**来实现。
 
 安装包
 
@@ -352,9 +352,9 @@ pnpm run format
 pnpm add @commitlint/config-conventional @commitlint/cli -D
 ```
 
-添加配置文件，新建`commitlint.config.cjs`(注意是 cjs)，然后添加下面的代码：
+添加配置文件，新建`commitlint.config.cjs`，然后添加下面的代码：
 
-```
+```jsx
 module.exports = {
   extends: ['@commitlint/config-conventional'],
   // 校验规则
@@ -388,7 +388,7 @@ module.exports = {
 
 在`package.json`中配置 scripts 命令
 
-```
+```json
 # 在scrips中添加下面的代码
 {
 "scripts": {
@@ -399,7 +399,7 @@ module.exports = {
 
 配置结束，现在当我们填写`commit`信息的时候，前面就需要带着下面的`subject`
 
-```
+```jsx
 'feat',//新特性、新功能
 'fix',//修改bug
 'docs',//文档修改
@@ -426,9 +426,9 @@ npx husky add .husky/commit-msg
 pnpm commitlint
 ```
 
-当我们 commit 提交信息时，就不能再随意写了，必须是 git commit -m 'fix: xxx' 符合类型的才可以，**需要注意的是类型的后面需要用英文的 :，并且冒号后面是需要空一格的，这个是不能省略的**
+当我们 commit 提交信息时，就不能再随意写了，必须是 git commit -m 'fix: xxx' 符合类型的才可以，需要注意的是类型的后面需要用英文的 :，并且冒号后面是需要空一格的，这个是不能省略的。
 
-#### 六、强制使用 pnpm 包管理器工具
+### 强制使用 pnpm 包管理器工具
 
 团队开发项目的时候，需要统一包管理器工具,因为不同包管理器工具下载同一个依赖,可能版本不一样,
 
