@@ -344,11 +344,11 @@ pnpm run format
 
 ### commitlint 配置
 
-对于我们的 commit 信息，也是有统一规范的，不能随便写，要让每个人都按照统一的标准来执行，我们可以利用**commitlint**来实现。
+对于我们的 commit 信息，也是有统一规范的，不能随便写，要让每个人都按照统一的标准来执行，我们可以利用 commitlint 来实现。
 
 安装包
 
-```
+```jsx
 pnpm add @commitlint/config-conventional @commitlint/cli -D
 ```
 
@@ -456,20 +456,16 @@ if (!/pnpm/.test(process.env.npm_execpath || '')) {
 
 ## 项目集成
 
-### 3.1 集成 element-plus
+### 集成 element-plus
 
-硅谷甄选运营平台,UI 组件库采用的 element-plus，因此需要集成 element-plus 插件！！！
-
-官网地址:https://element-plus.gitee.io/zh-CN/
-
-```
+```jsx
 pnpm install element-plus @element-plus/icons-vue
 ```
 
-**入口文件 main.ts 全局安装 element-plus,element-plus 默认支持语言英语设置为中文**
+入口文件 main.ts 全局安装 element-plus，element-plus 默认支持语言英语，设置为中文
 
-```
-import ElementPlus from 'element-plus';
+```jsx
+import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 //@ts-ignore忽略当前文件ts类型的检测否则有红色提示(打包会失败)
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
@@ -478,9 +474,9 @@ app.use(ElementPlus, {
 })
 ```
 
-**Element Plus 全局组件类型声明**
+Element Plus 全局组件类型声明
 
-```
+```json
 // tsconfig.json
 {
   "compilerOptions": {
@@ -490,13 +486,11 @@ app.use(ElementPlus, {
 }
 ```
 
-配置完毕可以测试 element-plus 组件与图标的使用.
-
-### 3.2src 别名的配置
+### src 别名的配置
 
 在开发项目的时候文件与文件关系可能很复杂，因此我们需要给 src 文件夹配置一个别名！！！
 
-```
+```tsx
 // vite.config.ts
 import {defineConfig} from 'vite'
 import vue from '@vitejs/plugin-vue'
@@ -511,9 +505,9 @@ export default defineConfig({
 })
 ```
 
-**TypeScript 编译配置**
+TypeScript 编译配置
 
-```
+```json
 // tsconfig.json
 {
   "compilerOptions": {
@@ -525,9 +519,9 @@ export default defineConfig({
 }
 ```
 
-### 3.3 环境变量的配置
+### 环境变量的配置
 
-**项目开发过程中，至少会经历开发环境、测试环境和生产环境(即正式环境)三个阶段。不同阶段请求的状态(如接口地址等)不尽相同，若手动切换接口地址是相当繁琐且易出错的。于是环境变量配置的需求就应运而生，我们只需做简单的配置，把环境状态切换的工作交给代码。**
+项目开发过程中，至少会经历开发环境、测试环境和生产环境(即正式环境)三个阶段。不同阶段请求的状态(如接口地址等)不尽相同，若手动切换接口地址是相当繁琐且易出错的。于是环境变量配置的需求就应运而生，我们只需做简单的配置，把环境状态切换的工作交给代码。
 
 开发环境（development）
 顾名思义，开发使用的环境，每位开发人员在自己的 dev 分支上干活，开发到一定程度，同事会合并代码，进行联调。
@@ -542,7 +536,7 @@ export default defineConfig({
 
 项目根目录分别添加 开发、生产和测试环境的文件!
 
-```
+```jsx
 .env.development
 .env.production
 .env.test
@@ -550,20 +544,20 @@ export default defineConfig({
 
 文件内容
 
-```
+```jsx
 # 变量必须以 VITE_ 为前缀才能暴露给外部读取
 NODE_ENV = 'development'
 VITE_APP_TITLE = '硅谷甄选运营平台'
 VITE_APP_BASE_API = '/dev-api'
 ```
 
-```
+```jsx
 NODE_ENV = 'production'
 VITE_APP_TITLE = '硅谷甄选运营平台'
 VITE_APP_BASE_API = '/prod-api'
 ```
 
-```
+```jsx
 # 变量必须以 VITE_ 为前缀才能暴露给外部读取
 NODE_ENV = 'test'
 VITE_APP_TITLE = '硅谷甄选运营平台'
@@ -572,7 +566,7 @@ VITE_APP_BASE_API = '/test-api'
 
 配置运行命令：package.json
 
-```
+```json
  "scripts": {
     "dev": "vite --open",
     "build:test": "vue-tsc && vite build --mode test",
@@ -583,7 +577,7 @@ VITE_APP_BASE_API = '/test-api'
 
 通过 import.meta.env 获取环境变量
 
-### 3.4SVG 图标配置
+### SVG 图标配置
 
 在开发项目的时候经常会用到 svg 矢量图,而且我们使用 SVG 以后，页面上加载的不再是图片资源,
 
@@ -620,7 +614,7 @@ export default () => {
 import 'virtual:svg-icons-register'
 ```
 
-#### 3.4.1svg 封装为全局组件
+#### svg 封装为全局组件
 
 因为项目很多模块需要使用图标,因此把它封装为全局组件！！！
 
@@ -687,7 +681,7 @@ import gloablComponent from './components/index';
 app.use(gloablComponent);
 ```
 
-### 3.5 集成 sass
+### 集成 sass
 
 我们目前在组件内部已经可以使用 scss 样式,因为在配置 styleLint 工具的时候，项目当中已经安装过 sass sass-loader,因此我们再组件内可以使用 scss 语法！！！需要加上 lang="scss"
 
@@ -733,7 +727,7 @@ export default defineConfig((config) => {
 
 配置完毕你会发现 scss 提供这些全局变量可以在组件样式中使用了！！！
 
-### 3.6mock 数据
+### mock 数据
 
 安装依赖:https://www.npmjs.com/package/vite-plugin-mock
 
@@ -843,7 +837,7 @@ pnpm install axios
 
 最后通过 axios 测试接口！！！
 
-### 3.7axios 二次封装
+### axios 二次封装
 
 在开发项目的时候避免不了与后端进行交互,因此我们需要使用 axios 插件实现发送网络请求。在开发项目的时候
 
@@ -902,7 +896,7 @@ request.interceptors.response.use((response) => {
 export default request;
 ```
 
-### 3.8API 接口统一管理
+### API 接口统一管理
 
 在开发项目的时候,接口可能很多需要统一管理。在 src 目录下去创建 api 文件夹去统一管理项目的接口；
 
@@ -950,13 +944,13 @@ export const reqLogout = () => request.post<any, any>(API.LOGOUT_URL)
 
 ## 项目的资源地址
 
-贾成豪老师代码仓库地址:https://gitee.com/jch1011/vue3_admin_template-bj1.git
+贾成豪老师代码仓库地址https://gitee.com/jch1011/vue3_admin_template-bj1.git
 
-项目在线文档:
+项目在线文档
 
-服务器域名:http://sph-api.atguigu.cn
+服务器域名http://sph-api.atguigu.cn
 
-swagger 文档:
+swagger 文档
 
 http://139.198.104.58:8209/swagger-ui.html
 
@@ -967,3 +961,4 @@ echarts:国内镜像网站
 https://www.isqqw.com/echarts-doc/zh/option.html#title
 
 http://datav.aliyun.com/portal/school/atlas/area_selector
+
