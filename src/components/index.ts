@@ -8,5 +8,5 @@ export default {
       // @ts-ignore
       app.component(item, allComponents[item])
     })
-  }
+  },
 }

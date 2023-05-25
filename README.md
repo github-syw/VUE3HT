@@ -13,7 +13,7 @@
 
 ### eslint 配置
 
-ESLint 最初是由[Nicholas C. Zakas](http://nczonline.net/) 于 2013 年 6 月创建的开源项目。它的目标是提供一个插件化的javascript 代码检测工具
+ESLint 最初是由[Nicholas C. Zakas](http://nczonline.net/) 于 2013 年 6 月创建的开源项目。它的目标是提供一个插件化的 javascript 代码检测工具
 
 首先安装 eslint
 

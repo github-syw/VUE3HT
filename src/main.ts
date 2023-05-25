@@ -21,7 +21,7 @@ import globalComponents from '@/components'
 
 const app = createApp(App)
 app.use(ElementPlus, {
-  locale: zhCn
+  locale: zhCn,
 })
 app.use(globalComponents)
 app.use(createPinia())

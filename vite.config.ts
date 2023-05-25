@@ -11,21 +11,21 @@ export default defineConfig({
     vue(),
     // svg
     createSvgIconsPlugin({
-      iconDirs: [path.resolve(process.cwd(), 'src/assets/icons')]
-    })
+      iconDirs: [path.resolve(process.cwd(), 'src/assets/icons')],
+    }),
   ],
   // 全局使用scss变量
   css: {
     preprocessorOptions: {
       scss: {
         javascriptEnabled: true,
-        additionalData: '@import "./src/style/variable.scss";'
-      }
-    }
+        additionalData: '@import "./src/style/variable.scss";',
+      },
+    },
   },
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
-    }
-  }
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+    },
+  },
 })
