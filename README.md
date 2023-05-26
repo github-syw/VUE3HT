@@ -522,7 +522,7 @@ TypeScript 编译配置
 
 ### 环境变量的配置
 
-项目开发过程中，至少会经历开发环境、测试环境和生产环境(即正式环境)三个阶段。不同阶段请求的状态(如接口地址等)不尽相同，若手动切换接口地址是相当繁琐且易出错的。于是环境变量配置的需求就应运而生，我们只需做简单的配置，把环境状态切换的工作交给代码。
+项目开发过程中，至少会经历开发环境、测试环境和生产环境（即正式环境）三个阶段。不同阶段请求的状态（如接口地址等）不尽相同，若手动切换接口地址是相当繁琐且易出错的。于是环境变量配置的需求就应运而生，我们只需做简单的配置，把环境状态切换的工作交给代码。
 
 开发环境（development）
 顾名思义，开发使用的环境，每位开发人员在自己的 dev 分支上干活，开发到一定程度，同事会合并代码，进行联调。
@@ -533,9 +533,9 @@ TypeScript 编译配置
 生产环境（production）
 生产环境是指正式提供对外服务的，一般会关掉错误报告，打开错误日志。(正式提供给客户使用的环境。)
 
-注意:一般情况下，一个环境对应一台服务器,也有的公司开发与测试环境是一台服务器！！！
+注意：一般情况下，一个环境对应一台服务器，也有的公司开发与测试环境是一台服务器！
 
-项目根目录分别添加 开发、生产和测试环境的文件!
+项目根目录分别添加 开发、生产和测试环境的文件！
 
 ```jsx
 .env.development
@@ -578,21 +578,19 @@ VITE_APP_BASE_API = '/test-api'
 
 通过 import.meta.env 获取环境变量
 
-### SVG 图标配置
+### SVG
 
-在开发项目的时候经常会用到 svg 矢量图,而且我们使用 SVG 以后，页面上加载的不再是图片资源,
+在开发项目的时候经常会用到 svg 矢量图，而且我们使用 SVG 以后，页面上加载的不再是图片资源，这对页面性能来说是个很大的提升，而且我们 SVG 文件比 img 要小的很多，放在项目中几乎不占用资源。
 
-这对页面性能来说是个很大的提升，而且我们 SVG 文件比 img 要小的很多，放在项目中几乎不占用资源。
+安装 SVG 依赖插件
 
-**安装 SVG 依赖插件**
-
-```
+```jsx
 pnpm install vite-plugin-svg-icons -D
 ```
 
-**在`vite.config.ts`中配置插件**
+在`vite.config.ts`中配置插件
 
-```
+```ts
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import path from 'path'
 export default () => {
@@ -609,19 +607,17 @@ export default () => {
 }
 ```
 
-**入口文件导入**
+入口文件导入
 
-```
+```ts
 import 'virtual:svg-icons-register'
 ```
 
 #### svg 封装为全局组件
 
-因为项目很多模块需要使用图标,因此把它封装为全局组件！！！
+在 src/components 目录下创建一个 SvgIcon 组件
 
-**在 src/components 目录下创建一个 SvgIcon 组件:代表如下**
-
-```
+```vue
 <template>
   <div>
     <svg :style="{ width: width, height: height }">
@@ -657,12 +653,11 @@ defineProps({
 
 })
 </script>
-<style scoped></style>
 ```
 
-在 src 文件夹目录下创建一个 index.ts 文件：用于注册 components 文件夹内部全部全局组件！！！
+在 src 文件夹目录下创建一个 index.ts 文件：用于注册 components 文件夹内部全部全局组件！
 
-```
+```ts
 import SvgIcon from './SvgIcon/index.vue';
 import type { App, Component } from 'vue';
 const components: { [name: string]: Component } = { SvgIcon };
@@ -677,7 +672,7 @@ export default {
 
 在入口文件引入 src/index.ts 文件,通过 app.use 方法安装自定义插件
 
-```
+```ts
 import gloablComponent from './components/index';
 app.use(gloablComponent);
 ```
@@ -826,19 +821,13 @@ export default [
 
 ### axios
 
-在开发项目的时候避免不了与后端进行交互,因此我们需要使用 axios 插件实现发送网络请求。在开发项目的时候
+请求拦截器，可以在请求拦截器中处理一些业务（开始进度条、请求头携带公共参数）
 
-我们经常会把 axios 进行二次封装。
-
-目的:
-
-1:使用请求拦截器，可以在请求拦截器中处理一些业务(开始进度条、请求头携带公共参数)
-
-2:使用响应拦截器，可以在响应拦截器中处理一些业务(进度条结束、简化服务器返回的数据、处理 http 网络错误)
+响应拦截器，可以在响应拦截器中处理一些业务（进度条结束、简化服务器返回的数据、处理 http 网络错误）
 
 在根目录下创建 utils/request.ts
 
-```
+```tsx
 import axios from "axios";
 import { ElMessage } from "element-plus";
 //创建axios实例
@@ -885,11 +874,9 @@ export default request;
 
 ### API 接口统一管理
 
-在开发项目的时候,接口可能很多需要统一管理。在 src 目录下去创建 api 文件夹去统一管理项目的接口；
+在开发项目的时候，接口可能很多需要统一管理。在 src 目录下去创建 api 文件夹去统一管理项目的接口
 
-比如:下面方式
-
-```
+```tsx
 //统一管理咱们项目用户相关的接口
 
 import request from '@/utils/request'
