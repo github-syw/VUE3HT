@@ -631,26 +631,25 @@ defineProps({
   //xlink:href属性值的前缀
   prefix: {
     type: String,
-    default: '#icon-'
+    default: '#icon-',
   },
   //svg矢量图的名字
   name: String,
   //svg图标的颜色
   color: {
     type: String,
-    default: ""
+    default: '',
   },
   //svg宽度
   width: {
     type: String,
-    default: '16px'
+    default: '16px',
   },
   //svg高度
   height: {
     type: String,
-    default: '16px'
-  }
-
+    default: '16px',
+  },
 })
 </script>
 ```
@@ -658,23 +657,23 @@ defineProps({
 在 src 文件夹目录下创建一个 index.ts 文件：用于注册 components 文件夹内部全部全局组件！
 
 ```ts
-import SvgIcon from './SvgIcon/index.vue';
-import type { App, Component } from 'vue';
-const components: { [name: string]: Component } = { SvgIcon };
+import SvgIcon from './SvgIcon/index.vue'
+import type { App, Component } from 'vue'
+const components: { [name: string]: Component } = { SvgIcon }
 export default {
-    install(app: App) {
-        Object.keys(components).forEach((key: string) => {
-            app.component(key, components[key]);
-        })
-    }
+  install(app: App) {
+    Object.keys(components).forEach((key: string) => {
+      app.component(key, components[key])
+    })
+  },
 }
 ```
 
 在入口文件引入 src/index.ts 文件,通过 app.use 方法安装自定义插件
 
 ```ts
-import gloablComponent from './components/index';
-app.use(gloablComponent);
+import gloablComponent from './components/index'
+app.use(gloablComponent)
 ```
 
 ### sass
@@ -828,48 +827,50 @@ export default [
 在根目录下创建 utils/request.ts
 
 ```tsx
-import axios from "axios";
-import { ElMessage } from "element-plus";
+import axios from 'axios'
+import { ElMessage } from 'element-plus'
 //创建axios实例
 let request = axios.create({
-    baseURL: import.meta.env.VITE_APP_BASE_API,
-    timeout: 5000
+  baseURL: import.meta.env.VITE_APP_BASE_API,
+  timeout: 5000,
 })
 //请求拦截器
-request.interceptors.request.use(config => {
-    return config;
-});
+request.interceptors.request.use((config) => {
+  return config
+})
 //响应拦截器
-request.interceptors.response.use((response) => {
-    return response.data;
-}, (error) => {
+request.interceptors.response.use(
+  (response) => {
+    return response.data
+  },
+  (error) => {
     //处理网络错误
-    let msg = '';
-    let status = error.response.status;
+    let msg = ''
+    let status = error.response.status
     switch (status) {
-        case 401:
-            msg = "token过期";
-            break;
-        case 403:
-            msg = '无权访问';
-            break;
-        case 404:
-            msg = "请求地址错误";
-            break;
-        case 500:
-            msg = "服务器出现问题";
-            break;
-        default:
-            msg = "无网络";
-
+      case 401:
+        msg = 'token过期'
+        break
+      case 403:
+        msg = '无权访问'
+        break
+      case 404:
+        msg = '请求地址错误'
+        break
+      case 500:
+        msg = '服务器出现问题'
+        break
+      default:
+        msg = '无网络'
     }
     ElMessage({
-        type: 'error',
-        message: msg
+      type: 'error',
+      message: msg,
     })
-    return Promise.reject(error);
-});
-export default request;
+    return Promise.reject(error)
+  },
+)
+export default request
 ```
 
 ### API 接口统一管理
@@ -882,34 +883,27 @@ export default request;
 import request from '@/utils/request'
 
 import type {
-
- loginFormData,
-
- loginResponseData,
-
- userInfoReponseData,
-
+  loginFormData,
+  loginResponseData,
+  userInfoReponseData,
 } from './type'
 
 //项目用户相关的请求地址
 
 enum API {
+  LOGIN_URL = '/admin/acl/index/login',
 
- LOGIN_URL = '/admin/acl/index/login',
+  USERINFO_URL = '/admin/acl/index/info',
 
- USERINFO_URL = '/admin/acl/index/info',
-
- LOGOUT_URL = '/admin/acl/index/logout',
-
+  LOGOUT_URL = '/admin/acl/index/logout',
 }
 //登录接口
 export const reqLogin = (data: loginFormData) =>
- request.post<any, loginResponseData>(API.LOGIN_URL, data)
+  request.post<any, loginResponseData>(API.LOGIN_URL, data)
 //获取用户信息
 
 export const reqUserInfo = () =>
-
- request.get<any, userInfoReponseData>(API.USERINFO_URL)
+  request.get<any, userInfoReponseData>(API.USERINFO_URL)
 
 //退出登录
 
