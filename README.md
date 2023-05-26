@@ -701,7 +701,7 @@ app.use(gloablComponent);
 在入口文件引入
 
 ```jsx
-import '@/styles';
+import '@/styles'
 ```
 
 但是你会发现在 src/styles/index.scss 全局样式文件中没有办法使用$变量，因此需要给项目中引入全局变量$
