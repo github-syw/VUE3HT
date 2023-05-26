@@ -682,11 +682,11 @@ import gloablComponent from './components/index';
 app.use(gloablComponent);
 ```
 
-### 集成 sass
+### sass
 
-我们目前在组件内部已经可以使用 scss 样式,因为在配置 styleLint 工具的时候，项目当中已经安装过 sass sass-loader,因此我们再组件内可以使用 scss 语法！！！需要加上 lang="scss"
+我们目前在组件内部已经可以使用 scss 样式，因为在配置 styleLint 工具的时候，项目当中已经安装过 sass sass-loader，因此我们再组件内可以使用 scss 语法
 
-```
+```js
 <style scoped lang="scss"></style>
 ```
 
@@ -694,23 +694,23 @@ app.use(gloablComponent);
 
 在 src/styles 目录下创建一个 index.scss 文件，当然项目中需要用到清除默认样式，因此在 index.scss 引入 reset.scss
 
-```
-@import reset.scss
+```jsx
+@import reset.scss;
 ```
 
 在入口文件引入
 
-```
-import '@/styles'
+```jsx
+import '@/styles';
 ```
 
-但是你会发现在 src/styles/index.scss 全局样式文件中没有办法使用$变量.因此需要给项目中引入全局变量$.
+但是你会发现在 src/styles/index.scss 全局样式文件中没有办法使用$变量，因此需要给项目中引入全局变量$
 
-在 style/variable.scss 创建一个 variable.scss 文件！
+在 style/variable.scss 创建一个 variable.scss 文件
 
 在 vite.config.ts 文件配置如下:
 
-```
+```ts
 export default defineConfig((config) => {
 	css: {
       preprocessorOptions: {
@@ -724,25 +724,21 @@ export default defineConfig((config) => {
 }
 ```
 
-**`@import "./src/styles/variable.less";`后面的`;`不要忘记，不然会报错**!
+### mock
 
-配置完毕你会发现 scss 提供这些全局变量可以在组件样式中使用了！！！
+安装依赖https://www.npmjs.com/package/vite-plugin-mock
 
-### mock 数据
-
-安装依赖:https://www.npmjs.com/package/vite-plugin-mock
-
-```
+```jsx
 pnpm install -D vite-plugin-mock mockjs
 ```
 
-在 vite.config.js 配置文件启用插件。
+在 vite.config.js 配置文件启用插件
 
-```
+```jsx
 import { UserConfigExport, ConfigEnv } from 'vite'
 import { viteMockServe } from 'vite-plugin-mock'
 import vue from '@vitejs/plugin-vue'
-export default ({ command })=> {
+export default ({ command }) => {
   return {
     plugins: [
       vue(),
@@ -754,91 +750,81 @@ export default ({ command })=> {
 }
 ```
 
-在根目录创建 mock 文件夹:去创建我们需要 mock 数据与接口！！！
+在根目录创建 mock 文件夹：去创建我们需要 mock 数据与接口
 
-在 mock 文件夹内部创建一个 user.ts 文件
-
-```
+```ts
 //用户信息数据
 function createUserList() {
-    return [
-        {
-            userId: 1,
-            avatar:
-                'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
-            username: 'admin',
-            password: '111111',
-            desc: '平台管理员',
-            roles: ['平台管理员'],
-            buttons: ['cuser.detail'],
-            routes: ['home'],
-            token: 'Admin Token',
-        },
-        {
-            userId: 2,
-            avatar:
-                'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
-            username: 'system',
-            password: '111111',
-            desc: '系统管理员',
-            roles: ['系统管理员'],
-            buttons: ['cuser.detail', 'cuser.user'],
-            routes: ['home'],
-            token: 'System Token',
-        },
-    ]
+  return [
+    {
+      userId: 1,
+      avatar:
+        'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+      username: 'admin',
+      password: '111111',
+      desc: '平台管理员',
+      roles: ['平台管理员'],
+      buttons: ['cuser.detail'],
+      routes: ['home'],
+      token: 'Admin Token',
+    },
+    {
+      userId: 2,
+      avatar:
+        'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+      username: 'system',
+      password: '111111',
+      desc: '系统管理员',
+      roles: ['系统管理员'],
+      buttons: ['cuser.detail', 'cuser.user'],
+      routes: ['home'],
+      token: 'System Token',
+    },
+  ]
 }
 
 export default [
-    // 用户登录接口
-    {
-        url: '/api/user/login',//请求地址
-        method: 'post',//请求方式
-        response: ({ body }) => {
-            //获取请求体携带过来的用户名与密码
-            const { username, password } = body;
-            //调用获取用户信息函数,用于判断是否有此用户
-            const checkUser = createUserList().find(
-                (item) => item.username === username && item.password === password,
-            )
-            //没有用户返回失败信息
-            if (!checkUser) {
-                return { code: 201, data: { message: '账号或者密码不正确' } }
-            }
-            //如果有返回成功信息
-            const { token } = checkUser
-            return { code: 200, data: { token } }
-        },
+  // 用户登录接口
+  {
+    url: '/api/user/login', //请求地址
+    method: 'post', //请求方式
+    response: ({ body }) => {
+      //获取请求体携带过来的用户名与密码
+      const { username, password } = body
+      //调用获取用户信息函数,用于判断是否有此用户
+      const checkUser = createUserList().find(
+        (item) => item.username === username && item.password === password,
+      )
+      //没有用户返回失败信息
+      if (!checkUser) {
+        return { code: 201, data: { message: '账号或者密码不正确' } }
+      }
+      //如果有返回成功信息
+      const { token } = checkUser
+      return { code: 200, data: { token } }
     },
-    // 获取用户信息
-    {
-        url: '/api/user/info',
-        method: 'get',
-        response: (request) => {
-            //获取请求头携带token
-            const token = request.headers.token;
-            //查看用户信息是否包含有次token用户
-            const checkUser = createUserList().find((item) => item.token === token)
-            //没有返回失败的信息
-            if (!checkUser) {
-                return { code: 201, data: { message: '获取用户信息失败' } }
-            }
-            //如果有返回成功信息
-            return { code: 200, data: {checkUser} }
-        },
+  },
+  // 获取用户信息
+  {
+    url: '/api/user/info',
+    method: 'get',
+    response: (request) => {
+      //获取请求头携带token
+      const token = request.headers.token
+      //查看用户信息是否包含有次token用户
+      const checkUser = createUserList().find((item) => item.token === token)
+      //没有返回失败的信息
+      if (!checkUser) {
+        return { code: 201, data: { message: '获取用户信息失败' } }
+      }
+      //如果有返回成功信息
+      return { code: 200, data: { checkUser } }
     },
+  },
 ]
 ```
 
-**安装 axios**
-
-```
-pnpm install axios
-```
-
-最后通过 axios 测试接口！！！
-
-### axios 二次封装
+### axios
 
 在开发项目的时候避免不了与后端进行交互,因此我们需要使用 axios 插件实现发送网络请求。在开发项目的时候
 

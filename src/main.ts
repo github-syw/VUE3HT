@@ -2,11 +2,8 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
-
+// 样式
 import '@/style/index.scss'
-import 'normalize.css'
-import '@/mock'
-
 // element-plus
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
